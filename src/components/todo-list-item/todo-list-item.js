@@ -2,7 +2,7 @@ import React from 'react';
 
 import './todo-list-item.css';
 
-const TodoListItem = ({ label, important = false }) => {
+const TodoListItem = ({ onDelete, id, label, important = false }) => {
 
   const style = {
     color: important ? 'steelblue' : 'black',
@@ -22,7 +22,7 @@ const TodoListItem = ({ label, important = false }) => {
         <i className="fa fa-exclamation" />
       </button>
 
-      <button type="button"
+      <button onClick={() => onDelete(id)} type="button"
               className="btn btn-outline-danger btn-sm float-right">
         <i className="fa fa-trash-o" />
       </button>
