@@ -2,7 +2,7 @@ import React from 'react';
 
 import './todo-list-item.css';
 
-const TodoListItem = ({ onDelete, id, label, important = false }) => {
+const TodoListItem = ({ onDelete, onToggleImportant, id, label, important = false }) => {
 
   const style = {
     color: important ? 'steelblue' : 'black',
@@ -17,7 +17,7 @@ const TodoListItem = ({ onDelete, id, label, important = false }) => {
         {label}
       </span>
 
-      <button type="button"
+      <button onClick={() => onToggleImportant(id)} type="button"
               className="btn btn-outline-success btn-sm float-right">
         <i className="fa fa-exclamation" />
       </button>

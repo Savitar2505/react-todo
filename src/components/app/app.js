@@ -14,7 +14,7 @@ class App extends React.Component {
         { label: 'Drink Coffee', important: false, id: 1 },
         { label: 'Make Awesome App', important: true, id: 2 },
         { label: 'Have a lunch', important: false, id: 3 },
-        { label: 'Drink vodka', important: false, id: 4 },
+        { label: 'Drink vodka', important: true, id: 4 },
         { label: 'Drink mohito', important: false, id: 5 },
       ]
   }
@@ -32,6 +32,25 @@ class App extends React.Component {
     })
   }
 
+  onToggleImportant = (id) => {
+    this.setState((oldState) => {
+      const idx = oldState.todos.findIndex((item) => item.id === id)
+
+      const prev = oldState.todos.slice(0, idx)
+      const current = oldState.todos[idx]
+      const next = oldState.todos.slice(idx + 1)
+
+
+      return {
+        todos: [
+          ...prev,
+          {...current, important: !current.important},
+          ...next
+        ]
+      }
+    })
+  }
+
   render() {
     return (
       <div className="todo-app">
@@ -41,7 +60,11 @@ class App extends React.Component {
           <ItemStatusFilter />
         </div>
 
-        <TodoList onDelete={this.onDelete} todos={this.state.todos} />
+        <TodoList
+          onDelete={this.onDelete}
+          onToggleImportant={this.onToggleImportant}
+          todos={this.state.todos}
+        />
       </div>
     );
   }
