@@ -2,15 +2,16 @@ import React from 'react';
 
 import './todo-list-item.css';
 
-const TodoListItem = ({ onDelete, onToggleImportant, id, label, important = false }) => {
+const TodoListItem = ({ onDelete, onToggleDone, onToggleImportant, id, label, important = false, done=false }) => {
 
   const style = {
-    color: important ? 'steelblue' : 'black',
-    fontWeight: important ? 'bold' : 'normal'
+      color: important ? 'steelblue' : 'black',
+      fontWeight: important ? 'bold' : 'normal',
+      textDecoration: done ? 'line-through' : 'none'
   };
 
   return (
-    <span className="todo-list-item">
+    <span onClick={()=>onToggleDone(id)} className="todo-list-item">
       <span
         className="todo-list-item-label"
         style={style}>
