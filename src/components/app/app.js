@@ -4,6 +4,7 @@ import AppHeader from '../app-header';
 import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
 import ItemStatusFilter from '../item-status-filter';
+import TodoAdd from '../todo-add';
 
 import './app.css';
 
@@ -18,6 +19,7 @@ class App extends React.Component {
         { label: 'Drink mojito', important: false, id: 5, done: false },
       ],
       filter: 'all',
+      searchString: '',
   }
 
   onDelete = (id) => {
@@ -65,6 +67,7 @@ class App extends React.Component {
           }
       })
   }
+
   onToggleFilter = (status) => {
     this.setState({
       filter: status
@@ -81,8 +84,37 @@ class App extends React.Component {
     }
   }
 
+  onSearchFilter = (todos, searchString) => {
+    const result = todos.filter((todo) => todo.label.includes(searchString))
+    return result
+  }
+
+  onSearchChange = (searchString) => {
+    this.setState({
+      searchString: searchString
+    })
+  }
+
+  addNewTodo = (labelText) => {
+    this.setState((oldState) => {
+
+      const newTodo = {
+        id: oldState.todos.filter((obj)=>{
+
+        }),
+        label: labelText,
+        important: false,
+        done: false
+      }
+
+      return {todos: [...oldState.todos, newTodo]}
+    })
+  }
+
   render() {
-      const filteredTodos = this.onStatusFilter(this.state.todos, this.state.filter)
+      const filteredTodos = this.onStatusFilter(this.state.todos, this.state.filter);
+      const filterBySearchTodos = this.onSearchFilter(filteredTodos, this.state.searchString);
+
       const doneTodos = this.state.todos.filter((obj)=>{
           return (obj.done===true)
       })
@@ -92,20 +124,27 @@ class App extends React.Component {
     return (
       <div className="todo-app">
         <AppHeader toDo={todo.length} done={doneTodos.length} />
+
         <div className="top-panel d-flex">
-          <SearchPanel />
+
+          <SearchPanel onSearchChange={this.onSearchChange} />
+
           <ItemStatusFilter onToggleFilter={this.onToggleFilter} filter={this.state.filter} />
+
         </div>
 
         <TodoList
           onDelete={this.onDelete}
           onToggleImportant={this.onToggleImportant}
-          todos={filteredTodos}
           onToggleDone={this.onToggleDone}
+          todos={filterBySearchTodos}
         />
+
+        <TodoAdd addNewTodo={this.addNewTodo} />
       </div>
     );
   }
 };
+
 
 export default App;
