@@ -85,7 +85,7 @@ class App extends React.Component {
   }
 
   onSearchFilter = (todos, searchString) => {
-    const result = todos.filter((todo) => todo.label.toLowerCase().includes(searchString.toLowerCase()))
+    const result = todos.filter((todo) => todo.label.toUpperCase().includes(searchString.toUpperCase()))
     return result
   }
 
@@ -97,6 +97,8 @@ class App extends React.Component {
 
   addNewTodo = (labelText) => {
     this.setState((oldState) => {
+
+
 
     const id = (state) => {
         let arr =[]
