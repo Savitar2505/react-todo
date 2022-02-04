@@ -15,10 +15,13 @@ class TodoAdd extends React.Component {
   onAddNewTodo = (event) => {
     event.preventDefault();
     this.props.addNewTodo(this.state.label)
+    this.setState({
+      label:''
+    })
   }
 
+
   render() {
-    console.log(this.state.label)
 
     return (
       <div>

@@ -85,7 +85,7 @@ class App extends React.Component {
   }
 
   onSearchFilter = (todos, searchString) => {
-    const result = todos.filter((todo) => todo.label.includes(searchString))
+    const result = todos.filter((todo) => todo.label.toLowerCase().includes(searchString.toLowerCase()))
     return result
   }
 
@@ -98,15 +98,21 @@ class App extends React.Component {
   addNewTodo = (labelText) => {
     this.setState((oldState) => {
 
+    const id = (state) => {
+        let arr =[]
+        state.forEach(elem=>{
+            arr.push(elem.id)
+        })
+        return Math.max.apply(null, arr)
+    }
       const newTodo = {
-        id: oldState.todos.filter((obj)=>{
-
-        }),
+        id: id(oldState.todos)+1,
         label: labelText,
         important: false,
         done: false
       }
 
+      console.log(oldState.todos)
       return {todos: [...oldState.todos, newTodo]}
     })
   }
