@@ -30,7 +30,7 @@ class TodoAdd extends React.Component {
         <form onSubmit={this.onAddNewTodo} className='form'>
 
           <input
-              className="form-control search-input"
+            className="form-control search-input"
             onChange={(event) => this.onValueChange(event.target.value)}
             value={this.state.label}
             type='text'
