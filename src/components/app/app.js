@@ -100,13 +100,13 @@ class App extends React.Component {
 
 
 
-    const id = (state) => {
-        let arr =[]
-        state.forEach(elem=>{
-            arr.push(elem.id)
-        })
-        return Math.max.apply(null, arr)
-    }
+      const id = (state) => {
+         let arr =[]
+         state.forEach(elem=>{
+             arr.push(elem.id)
+         })
+         return Math.max.apply(null, arr)
+      }
       const newTodo = {
         id: id(oldState.todos)+1,
         label: labelText,
@@ -114,7 +114,6 @@ class App extends React.Component {
         done: false
       }
 
-      console.log(oldState.todos)
       return {todos: [...oldState.todos, newTodo]}
     })
   }
@@ -152,7 +151,7 @@ class App extends React.Component {
       </div>
     );
   }
-};
+}
 
 
 export default App;
