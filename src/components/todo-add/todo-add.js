@@ -32,7 +32,6 @@ class TodoAdd extends React.Component {
           <input
             className="form-control search-input"
             onChange={(event) => this.onValueChange(event.target.value)}
-            value={this.state.label}
             type='text'
             placeholder='Feel the todo'
           />

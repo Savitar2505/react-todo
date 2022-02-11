@@ -5,6 +5,8 @@ import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
 import ItemStatusFilter from '../item-status-filter';
 import TodoAdd from '../todo-add';
+import TodoApi from "../../services/todo-api";
+import Login from "../login";
 
 import './app.css';
 
@@ -21,17 +23,12 @@ class App extends React.Component {
       filter: 'all',
       searchString: '',
   }
+  todoApi = new TodoApi()
 
   onDelete = (id) => {
-    this.setState((oldState) => {
-      const idx = oldState.todos.findIndex((item) => item.id === id)
-      const prev = oldState.todos.slice(0, idx)
-      const next = oldState.todos.slice(idx + 1)
-
-      return {
-        todos: [...prev, ...next]
-      }
-    })
+      this.todoApi.deleteTodos(id).then(data=>{
+          this.onLoadTodos()
+      })
   }
 
   onToggleImportant = (id) => {
@@ -96,62 +93,71 @@ class App extends React.Component {
   }
 
   addNewTodo = (labelText) => {
-    this.setState((oldState) => {
-
-
-
-      const id = (state) => {
-         let arr =[]
-         state.forEach(elem=>{
-             arr.push(elem.id)
-         })
-         return Math.max.apply(null, arr)
-      }
-      const newTodo = {
-        id: id(oldState.todos)+1,
-        label: labelText,
-        important: false,
-        done: false
-      }
-
-      return {todos: [...oldState.todos, newTodo]}
+    this.todoApi.createTodos(labelText).then(data=>{
+        this.onLoadTodos()
     })
   }
 
-  render() {
-      const filteredTodos = this.onStatusFilter(this.state.todos, this.state.filter);
-      const filterBySearchTodos = this.onSearchFilter(filteredTodos, this.state.searchString);
-
-      const doneTodos = this.state.todos.filter((obj)=>{
-          return (obj.done===true)
+  onLoadTodos=()=>{
+      this.todoApi.getTodos().then(todos=>{
+          this.setState({
+              todos:todos
+          })
       })
-      const todo = this.state.todos.filter( (obj)=>{
-          return (obj.done===false)
-      })
-    return (
-      <div className="todo-app">
-        <AppHeader toDo={todo.length} done={doneTodos.length} />
-
-        <div className="top-panel d-flex">
-
-          <SearchPanel onSearchChange={this.onSearchChange} />
-
-          <ItemStatusFilter onToggleFilter={this.onToggleFilter} filter={this.state.filter} />
-
-        </div>
-
-        <TodoList
-          onDelete={this.onDelete}
-          onToggleImportant={this.onToggleImportant}
-          onToggleDone={this.onToggleDone}
-          todos={filterBySearchTodos}
-        />
-
-        <TodoAdd addNewTodo={this.addNewTodo} />
-      </div>
-    );
   }
-}
 
+  componentDidMount() {
+      const credentials = localStorage.getItem('credentials')
+      if(credentials) {
+          this.onLoadTodos()
+      }
+  }
+
+
+    render() {
+      const credentials = localStorage.getItem('credentials')
+
+      if(credentials){
+
+          const filteredTodos = this.onStatusFilter(this.state.todos, this.state.filter);
+          const filterBySearchTodos = this.onSearchFilter(filteredTodos, this.state.searchString);
+
+          const doneTodos = this.state.todos.filter((obj)=>{
+              return (obj.done===true)
+          })
+          const todo = this.state.todos.filter( (obj)=>{
+              return (obj.done===false)
+          })
+          return (
+              <div className="todo-app">
+                <AppHeader toDo={todo.length} done={doneTodos.length} />
+
+                <div className="top-panel d-flex">
+
+                  <SearchPanel onSearchChange={this.onSearchChange} />
+
+                  <ItemStatusFilter onToggleFilter={this.onToggleFilter} filter={this.state.filter} />
+                </div>
+
+                <TodoList
+                  onDelete={this.onDelete}
+                  onToggleImportant={this.onToggleImportant}
+                  onToggleDone={this.onToggleDone}
+                  todos={filterBySearchTodos}
+                />    
+
+                <TodoAdd addNewTodo={this.addNewTodo} />
+              </div>
+          );
+      }
+      else {
+          return (
+              <div>
+                  <Login />
+              </div>
+          )
+          }
+      }
+ }
 
 export default App;
