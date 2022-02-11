@@ -1,0 +1,9 @@
+.form{
+  display: flex;
+  margin-top: 10px;
+}
+.search-input {
+  display: flex;
+  width: auto;
+  flex-grow: 1;
+}
