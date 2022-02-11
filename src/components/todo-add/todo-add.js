@@ -29,7 +29,6 @@ class TodoAdd extends React.Component {
         <form onSubmit={this.onAddNewTodo}>
           <input
             onChange={(event) => this.onValueChange(event.target.value)}
-            value={this.state.label}
             type='text'
             placeholder='Feel the todo'
           />
