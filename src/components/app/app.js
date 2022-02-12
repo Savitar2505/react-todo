@@ -13,13 +13,7 @@ import './app.css';
 
 class App extends React.Component {
   state = {
-      todos: [
-        { label: 'Drink Coffee', important: false, id: 1, done: false },
-        { label: 'Make Awesome App', important: true, id: 2, done: false },
-        { label: 'Have a lunch', important: false, id: 3, done: false },
-        { label: 'Drink vodka', important: true, id: 4, done: false },
-        { label: 'Drink mojito', important: false, id: 5, done: false },
-      ],
+      todos: [],
       filter: 'all',
       searchString: '',
   }
@@ -32,36 +26,29 @@ class App extends React.Component {
   }
 
   onToggleImportant = (id) => {
-    this.setState((oldState) => {
-      const idx = oldState.todos.findIndex((item) => item.id === id)
+      const idx = this.state.todos.findIndex((item) => item.id === id)
+      const old = this.state.todos[idx]
 
-      const prev = oldState.todos.slice(0, idx)
-      const current = oldState.todos[idx]
-      const next = oldState.todos.slice(idx + 1)
-
-
-      return {
-        todos: [
-          ...prev,
-          {...current, important: !current.important},
-          ...next
-        ]
+      const newTodo ={
+          label: old.label,
+          important: !old.important,
+          done: old.done,
       }
-    })
+      this.todoApi.onUpdateTodos(old.id, newTodo).then(data=>{
+          this.onLoadTodos()
+      })
   }
   onToggleDone =(id)=>{
-      this.setState((oldState)=>{
-          const idx =oldState.todos.findIndex((item)=>item.id===id)
-          const prev = oldState.todos.slice(0, idx,)
-          const current =oldState.todos[idx]
-          const next =oldState.todos.slice(idx+1)
-          return{
-              todos:[
-                  ...prev,
-                  {...current, done: !current.done},
-                  ...next
-              ]
-          }
+      const idx = this.state.todos.findIndex((item) => item.id === id)
+      const old = this.state.todos[idx]
+
+      const newTodo ={
+          label: old.label,
+          important: old.important,
+          done: !old.done,
+      }
+      this.todoApi.onUpdateTodos(old.id, newTodo).then(data=>{
+          this.onLoadTodos()
       })
   }
 

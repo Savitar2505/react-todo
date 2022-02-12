@@ -3,7 +3,7 @@ class TodoApi {
 
     login = (username, password) => {
 
-        fetch(
+         fetch(
             `${this._baseUrl}/token/`,
             {
                 method: 'POST',
@@ -75,6 +75,23 @@ class TodoApi {
                     important: false,
                     done: false
                 })
+            }
+        ).then(response =>{
+            return  response.json()
+            }
+        )
+    }
+    onUpdateTodos =(id, body)=>{
+        const credentials = JSON.parse(localStorage.getItem('credentials'))
+        return fetch(
+            `${this._baseUrl}/v1/${id}`,
+            {
+                method: 'PATCH',
+                headers:{
+                    'Content-type': 'application/json',
+                    'Authorization':`Bearer ${credentials.access}`
+                },
+                body: JSON.stringify(body)
             }
         ).then(response =>{
             return  response.json()
