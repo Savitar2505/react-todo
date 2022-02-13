@@ -1,4 +1,5 @@
 import React from 'react';
+import './todo-add.css';
 
 
 class TodoAdd extends React.Component {
@@ -26,7 +27,8 @@ class TodoAdd extends React.Component {
 
     return (
       <div>
-        <form onSubmit={this.onAddNewTodo}>
+        <form onSubmit={this.onAddNewTodo} className='form'>
+
           <input
             className="form-control search-input"
             value={this.state.label}
@@ -36,7 +38,8 @@ class TodoAdd extends React.Component {
           />
           <input
               className="btn btn-info"
-              type='submit' value='Add' />
+              type='submit' value='Add'/>
+
         </form>
       </div>
     )
