@@ -8,7 +8,7 @@ class TodoAdd extends React.Component {
 
   onValueChange = (text) => {
     this.setState({
-      label: text.toLowerCase()
+      label: text
     })
   }
 
@@ -28,6 +28,7 @@ class TodoAdd extends React.Component {
       <div>
         <form onSubmit={this.onAddNewTodo}>
           <input
+            value={this.state.label}
             onChange={(event) => this.onValueChange(event.target.value)}
             type='text'
             placeholder='Feel the todo'
