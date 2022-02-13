@@ -131,7 +131,7 @@ class App extends React.Component {
                   onToggleImportant={this.onToggleImportant}
                   onToggleDone={this.onToggleDone}
                   todos={filterBySearchTodos}
-                />
+                />    
 
                 <TodoAdd addNewTodo={this.addNewTodo} />
               </div>
