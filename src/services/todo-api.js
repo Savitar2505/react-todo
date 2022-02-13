@@ -1,5 +1,5 @@
 class TodoApi {
-    _baseUrl ='http://localhost:8000/api'
+    _baseUrl ='http://abdyko.tmweb.ru/api'
 
     login = (username, password) => {
 
@@ -32,7 +32,7 @@ class TodoApi {
     getTodos =()=>{
         const credentials = JSON.parse(localStorage.getItem('credentials'))
         return fetch(
-            `${this._baseUrl}/v1/`,
+            `${this._baseUrl}/v1/todo/`,
             {
                 headers:{
                     'Content-type': 'application/json',
@@ -47,7 +47,7 @@ class TodoApi {
     deleteTodos =(id)=>{
         const credentials = JSON.parse(localStorage.getItem('credentials'))
         return fetch(
-            `${this._baseUrl}/v1/${id}`,
+            `${this._baseUrl}/v1/todo/${id}/`,
             {
                 method: 'DELETE',
                 headers:{
@@ -63,7 +63,7 @@ class TodoApi {
     createTodos =(label)=>{
         const credentials = JSON.parse(localStorage.getItem('credentials'))
         return fetch(
-            `${this._baseUrl}/v1/`,
+            `${this._baseUrl}/v1/todo/`,
             {
                 method: 'POST',
                 headers:{
@@ -84,7 +84,7 @@ class TodoApi {
     onUpdateTodos =(id, body)=>{
         const credentials = JSON.parse(localStorage.getItem('credentials'))
         return fetch(
-            `${this._baseUrl}/v1/${id}`,
+            `${this._baseUrl}/v1/todo/${id}/`,
             {
                 method: 'PATCH',
                 headers:{

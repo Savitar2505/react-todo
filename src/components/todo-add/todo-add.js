@@ -9,7 +9,7 @@ class TodoAdd extends React.Component {
 
   onValueChange = (text) => {
     this.setState({
-      label: text.toLowerCase()
+      label: text
     })
   }
 
@@ -31,6 +31,7 @@ class TodoAdd extends React.Component {
 
           <input
             className="form-control search-input"
+            value={this.state.label}
             onChange={(event) => this.onValueChange(event.target.value)}
             type='text'
             placeholder='Feel the todo'
